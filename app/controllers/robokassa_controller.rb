@@ -4,22 +4,22 @@ class RobokassaController < ApplicationController
 
   def paid
     if @notification.valid_result_signature?
-      instance_exec @notification, &Rubykassa.result_callback
+      result_callback @notification
     else
-      instance_exec @notification, &Rubykassa.fail_callback
+      fail_callback @notification
     end
   end
 
   def success
     if @notification.valid_success_signature?
-      instance_exec @notification, &Rubykassa.success_callback
+      success_callback @notification
     else
-      instance_exec @notification, &Rubykassa.fail_callback
+      fail_callback @notification
     end
   end
 
   def fail
-    instance_exec @notification, &Rubykassa.fail_callback
+    fail_callback @notification
   end
 
   private
